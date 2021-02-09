@@ -1,0 +1,7 @@
+/vendor/
+/build/
+*.cache
+testdox.txt
+clover.xml
+phpunit.xml
+/xml-coverage/
