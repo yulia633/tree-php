@@ -2,7 +2,13 @@
 
 namespace App\Node;
 
-//конструктор
+/**
+ * Make node
+ * @param  int $number
+ * @param  int $left
+ * @param  int $right
+ * @return array
+ */
 function makeNode($number = null, $left = null, $right = null)
 {
     return [
@@ -12,30 +18,60 @@ function makeNode($number = null, $left = null, $right = null)
     ];
 }
 
+/**
+ * Return number
+ * @param array $node
+ * @return  int
+ * @example
+ * getNumber(makeNode(9, makeNode(1, null, null), makeNode(6, null, null))); // 9
+ * getNumber(tree); // 9
+ */
 function getNumber($node)
 {
     return $node['number'];
 }
 
+/**
+ * Return left part
+ * @param array $node
+ * @return  int|array
+ * @example
+ * getLeft(makeNode(1, 2, 3)); // 2
+ * getLeft(makeNode(9, makeNode(1, null, null), makeNode(6, null, null)));
+ * // [["number"]=> 1, ["left"] => NULL, ["right"] => NULL]
+ */
 function getLeft($node)
 {
     return $node['left'];
 }
 
+/**
+ * Return right part
+ * @param array $node
+ * @return  int|array
+ * @example
+ * getRight(makeNode(1, 2, 3)); // 3
+ * getRight(makeNode(9, makeNode(1, null, null), makeNode(6, null, null)));
+ * // [["number"]=> 6, ["left"] => NULL, ["right"] => NULL]
+ */
 function getRight($node)
 {
     return $node['right'];
 }
 
-//получить ноду
+/**
+ * Getter node
+ * @param  array $node
+ * @param  array $acc
+ * @return array
+ */
 function getNode($node, $acc = [])
 {
-    if (getNumber($node) !== null) {
-        $acc[] = getNumber($node);
-    }
-
     $array = [$node];
     return array_reduce($array, function ($newAcc, $item) use ($acc) {
+        if (getNumber($item) !== null) {
+            $acc[] = getNumber($item);
+        }
         if (getLeft($item) !== null) {
             $acc[] = getNode(getLeft($item), $newAcc);
         }
@@ -46,14 +82,22 @@ function getNode($node, $acc = [])
     }, $acc);
 }
 
-//распечатать дерево
+/**
+ * Print the tree
+ * @param  array $node
+ * @return string
+ */
 function printTree($node)
 {
     $string = implode(", ", getNumbersTree($node));
         return "($string)";
 }
 
-//распечатать ноды по порядку
+/**
+ * Print the node number in order
+ * @param  array $node
+ * @return string
+ */
 function printNode($node)
 {
     if ($node === null) {
@@ -64,7 +108,12 @@ function printNode($node)
     ' ' . printNode(getRight($node)));
 }
 
-// написать функцию, которая которая печатает число из ноды В виде ["$number"]
+/**
+ * Print number ["$number"] from node
+ * @param  array $node
+ * @param  int $numberPrint
+ * @return string
+ */
 function printNumberNode($node, $numberPrint)
 {
     $numbersNode = getNumbersTree($node);
@@ -72,7 +121,7 @@ function printNumberNode($node, $numberPrint)
     $result = "";
     foreach ($numbersNode as $number) {
         if (!in_array($numberPrint, $numbersNode)) {
-            return 'Нет такого числа в ноде'; //todo сделать Exception
+            return "Нет такого числа {$numberPrint} в ноде";
         } elseif ($numberPrint === $number) {
             $result = "[$number]";
         }
@@ -80,28 +129,46 @@ function printNumberNode($node, $numberPrint)
     return $result;
 }
 
-//функция, которая суммирует числа в дереве
+/**
+ * Sum numbers in the tree
+ * @param  array $tree
+ * @return int
+ */
 function getSumNumbersTree($tree)
 {
     $numbers = getNumbersTree($tree);
     return array_sum($numbers);
 }
 
-// функция, которая считает кол-во нод в дереве
+/**
+ * Count numbers of node in the tree
+ * @param  array $tree
+ * @return int
+ */
 function getCountNode($tree)
 {
     $numbers = getNumbersTree($tree);
     return count($numbers);
 }
 
-// функция, которая проверяет есть ли число в дереве
+/**
+ * Check number in the tree
+ * @param  array $tree
+ * @param  int $number
+ * @return boolean
+ */
 function hasNumber($tree, $number)
 {
     $result = search($tree, $number);
     return $result !== null;
 }
 
-//функция поиска  элемента в дереве
+/**
+ * Search number in the tree
+ * @param  array $tree
+ * @param  int $number
+ * @return int|null
+ */
 function search($tree, $number)
 {
     if (empty($tree)) {
@@ -116,7 +183,11 @@ function search($tree, $number)
     }
 }
 
-//получить все числа в дереве
+/**
+ * Get all numbers in the tree
+ * @param  array $tree
+ * @return array
+ */
 function getNumbersTree($tree)
 {
     $nodes = getNode($tree, []);
@@ -125,14 +196,21 @@ function getNumbersTree($tree)
     return $numbers;
 }
 
-// сделать плоским массив
-function flatten($items)
+/**
+ * Recursively flatten array
+ * @param array $tree
+ * @return array
+ * @example
+ * flatten([1]); // [1];
+ * flatten([1, 2, [3, 4]]); // [1, 2, 3, 4];
+ */
+function flatten($tree)
 {
-    if (!is_array($items)) {
-        return [$items];
+    if (!is_array($tree)) {
+        return [$tree];
     }
 
-    return array_reduce($items, function ($carry, $item) {
-        return array_merge($carry, flatten($item));
+    return array_reduce($tree, function ($acc, $item) {
+        return array_merge($acc, flatten($item));
     }, []);
 }
