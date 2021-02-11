@@ -76,7 +76,7 @@ function getNode($node, $acc = [])
             $acc[] = getNode(getLeft($item), $newAcc);
         }
         if (getRight($item) !== null) {
-              $acc[] = getNode(getRight($item), $newAcc);
+            $acc[] = getNode(getRight($item), $newAcc);
         }
         return $acc;
     }, $acc);
