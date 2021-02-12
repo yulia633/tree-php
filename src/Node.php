@@ -114,16 +114,16 @@ function printNode($node)
  * @param  int $numberPrint
  * @return string
  */
-function printNumberNode($node, $numberPrint)
+function sringify($node, $number)
 {
     $numbersNode = getNumbersTree($node);
 
     $result = "";
-    foreach ($numbersNode as $number) {
-        if (!in_array($numberPrint, $numbersNode)) {
-            return "Нет такого числа {$numberPrint} в ноде";
-        } elseif ($numberPrint === $number) {
-            $result = "[$number]";
+    foreach ($numbersNode as $num) {
+        if (!in_array($number, $numbersNode)) {
+            return "Нет такого числа {$number} в ноде";
+        } elseif ($number === $num) {
+            $result = "[$num]";
         }
     }
     return $result;
@@ -134,7 +134,7 @@ function printNumberNode($node, $numberPrint)
  * @param  array $tree
  * @return int
  */
-function getSumNumbersTree($tree)
+function getSum($tree)
 {
     $numbers = getNumbersTree($tree);
     return array_sum($numbers);
@@ -145,7 +145,7 @@ function getSumNumbersTree($tree)
  * @param  array $tree
  * @return int
  */
-function getCountNode($tree)
+function getCount($tree)
 {
     $numbers = getNumbersTree($tree);
     return count($numbers);

@@ -3,17 +3,16 @@
 namespace App\Tests;
 
 use PHPUnit\Framework\TestCase;
-use App\Node;
 
 use function App\Node\makeNode;
 use function App\Node\getNumber;
 use function App\Node\getLeft;
 use function App\Node\getRight;
-use function App\Node\getCountNode;
-use function App\Node\getSumNumbersTree;
+use function App\Node\getCount;
+use function App\Node\getSum;
 use function App\Node\printTree;
 use function App\Node\printNode;
-use function App\Node\printNumberNode;
+use function App\Node\sringify;
 use function App\Node\hasNumber;
 use function App\Node\search;
 use function App\Node\flatten;
@@ -98,13 +97,13 @@ class NodeTest extends TestCase
 
     public function testMethods()
     {
-        $this->assertEquals(9, getCountNode($this->tree));
-        $this->assertEquals(96, getSumNumbersTree($this->tree));
+        $this->assertEquals(9, getCount($this->tree));
+        $this->assertEquals(96, getSum($this->tree));
         $this->assertEquals('(9, 4, 3, 6, 5, 7, 17, 22, 23)', printTree($this->tree));
         $this->assertEquals('3 4 5 6 7 9 17 22 23', printNode($this->tree));
-        $this->assertEquals('[6]', printNumberNode($this->tree, 6));
-        $this->assertEquals('[17]', printNumberNode($this->tree, 17));
-        $this->assertEquals('Нет такого числа 168 в ноде', printNumberNode($this->tree, 168));
+        $this->assertEquals('[6]', sringify($this->tree, 6));
+        $this->assertEquals('[17]', sringify($this->tree, 17));
+        $this->assertEquals('Нет такого числа 168 в ноде', sringify($this->tree, 168));
         $this->assertEquals(7, search($this->tree, 7));
         $this->assertEquals(null, search($this->tree, 79));
         $this->assertEquals(['0' => 9, '1' => 4, '2' => 3, '3' => null, '4' => null, '5' => 6,
