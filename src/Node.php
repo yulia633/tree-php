@@ -214,3 +214,20 @@ function flatten($tree)
         return array_merge($acc, flatten($item));
     }, []);
 }
+
+/**
+ * Method that checks the tree for balance.
+ * @param array $tree
+ * @return boolean
+ * @example
+ * isBalanced([1, [2, [3]]); // true
+ * isBalanced([1, [2, [3, [1, 4, [6]]]]); // false
+ */
+function isBalanced($tree)
+{
+    $leftNodeCount = getLeft($tree) ? getCount(getLeft($tree)) : 0;
+    $rightNodeCount = getRight($tree) ? getCount(getRight($tree)) : 0;
+    $leftIsBalanced = getLeft($tree) ? isBalanced(getLeft($tree)) : true;
+    $rightIsBalanced = getRight($tree) ? isBalanced(getRight($tree)) : true;
+    return abs($leftNodeCount - $rightNodeCount) <= 2 && $rightIsBalanced && $leftIsBalanced;
+}

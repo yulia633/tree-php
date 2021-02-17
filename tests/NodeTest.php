@@ -17,6 +17,7 @@ use function App\Node\hasNumber;
 use function App\Node\search;
 use function App\Node\flatten;
 use function App\Node\getNumbersTree;
+use function App\Node\isBalanced;
 use function App\Node\getNode;
 
 class NodeTest extends TestCase
@@ -114,5 +115,28 @@ class NodeTest extends TestCase
         $this->assertEquals(true, hasNumber($this->tree, 7));
         $this->assertEquals(false, hasNumber($this->tree, 20));
         //getNode
+    }
+
+    public function testIsBalanced()
+    {
+        $expected2 = [
+            'number' => 4,
+            'left' => [
+                'number' => 5,
+                'left' =>  [
+                    'number' => 2,
+                    'left' => [
+                        'number' => 1,
+                            'left' => null,
+                            'right' => null,
+                    ],
+                    'right' => null,
+                ],
+                'right' => null,
+            ],
+            'right' => null,
+        ];
+        $this->assertEquals(true, isBalanced($this->tree));
+        $this->assertEquals(false, isBalanced($expected2));
     }
 }
